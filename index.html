@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>FTB Idle</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="stylesheet.css">
+		<script src="jquery.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+		<script src="app.js"></script>
+	</head>
+	<body onload="Game.start($('#inventory'));">
+		<ul class="sidebar">
+			<h2>IdleCraft</h2>
+			<h2>Mining</h2>
+			<li><img src="img/grass.png"><h3>The Overworld</h3></li>
+			<li><img src="img/netherrack.png"><h3>The Nether</h3></li>
+			<li><img src="img/endstone.png"><h3>The End</h3></li>
+			<h2>Inventory management</h2>
+			<li><img src="img/crafting-table.png"><h3>Crafting</h3></li>
+			<li><img src="img/furnace.png"><h3>Smelting</h3></li>
+			<li><img src="img/chest.png"><h3>Storage</h3></li>
+			<h2>Food</h2>
+			<li><img src="img/wheat.png"><h3>Farming</h3></li>
+			<li><img src="img/hay-bale.png"><h3>Ranching</h3></li>
+			<h2>Combat</h2>
+			<li><img src="img/brewing-stand.png"><h3>Potion Brewing</h3></li>
+			<li><img src="img/bookcase.png"><h3>Enchanting</h3></li>
+			<li><img src="img/sword.png"><h3>Battle</h3></li>
+			<li><img src="img/mossy-stone-brick.png"><h3>Dungeons</h3></li>
+		</ul>
+
+		<br><br>
+
+		<div class="inventory-box">
+			<h2>Inventory</h2>
+			<ul id="inventory" class="inventory inventory-slots"></ul>
+		</div>
+		<br>
+		<br>
+
+		<div id="harvest-wood" class="inventory-box tool-box">
+			<ul id="wood-slot" class="inventory-slots"></ul>
+			<button onclick="Game.harvest('wood');">Chop wood</button>
+			<script>
+				$(function() {
+					$('#harvest-wood').append(new Inventory($('#wood-slot'), 1));
+				});
+			</script>
+		</div>
+
+		<div id="harvest-stone" class="inventory-box tool-box">
+			<ul id="stone-slot" class="inventory-slots"></ul>
+			<button onclick="Game.harvest('stone');">Mine stone</button>
+			<script>
+				$(function() {
+					$('#harvest-stone').append(new Inventory($('#stone-slot'), 1));
+				});
+			</script>
+		</div>
+
+		<br>
+		<h2 style="color: white;">Craft:</h2>
+		<button onclick="Game.craft('planks', 4, {'wood': 1})">4x planks (1x wood)</button>
+		<button onclick="Game.craft('stick', 4, {'planks': 2})">4x stick (2x planks)</button>
+		<br>
+		<button onclick="Game.craft('wooden-pickaxe', 1, {'stick': 2, 'planks': 3}, 1, 100)">Wooden pickaxe</button>
+		
+		<button onclick="Game.craft('stick', 4, {'planks': 2})">Create a villager hut (15x wood, 60x planks, 25x stone)</button>
+		<h2 style=color:white;>Villagers can work for you. You have no villagers yet.</h2>
+		<table style="table-layout:fixed; background-color:silver;" border="1">
+			<tr>
+				<th>Work</th>
+				<th>Produces</th>
+				<th>Assignees</th>
+				<th>Required</th>
+				<th>Current production</th>
+			</tr>
+			<tr>
+				<td>Lumberjack</td>
+				<td>1 Wood + 5% Apple / s</td>
+				<td>0 / 0</td>
+				<td>Axe</td>
+				<td>0 items/s</td>
+			</tr>
+			<tr>
+				<td>Stone Miner</td>
+				<td>90% stone | 10% coal /s</td>
+				<td>0 / 0</td>
+				<td>Pickaxe</td>
+				<td>0 items/s</td>
+			</tr>
+			<tr>
+				<td>Cave Miner</td>
+				<td>45% stone | 35% coal | 20% iron /s</td>
+				<td>0 / 0</td>
+				<td>[Stone+] Pickaxe</td>
+				<td>0 items/s</td>
+			</tr>
+			<tr>
+				<td>Deep Cave Miner</td>
+				<td>20% stone | 55% coal | 20% iron | 10% gold | 5% diamond /s</td>
+				<td>0 / 0</td>
+				<td>[Iron+] Pickaxe</td>
+				<td>0 items/s</td>
+			</tr>
+		</table>
+	</body>
+</html>
