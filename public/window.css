@@ -1,0 +1,82 @@
+window {
+    position: absolute;
+    display: inline-flex;
+    flex-direction: column;
+    background-color: silver;
+    border: 2px solid;
+    border-color: white gray gray white;
+    outline: 2px solid black;
+}
+
+titlebar {
+    padding: 2px;
+    padding-left: 4pt;
+    background: linear-gradient(to right, rgb(40, 40, 102), rgb(96, 163, 221));
+    color: white;
+    user-select: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+}
+titlebar span {
+    flex: 1 0 auto;
+}
+
+titlebar button {
+    width: 18px;
+    height: 17px;
+    padding: 0;
+    margin:0;
+    margin-top: 1px;
+    font-size: 6pt;
+    font-weight: 800;
+}
+
+menubar {
+    display: flex;
+    height: 24px;
+    border-bottom: 2px solid white;
+}
+
+menubaritem {
+    display: block;
+    padding: 3px;
+    cursor: pointer;
+}
+
+menubaritem:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+taskbar {
+    background-color: silver;
+    border-top: 2px solid white;
+    outline: 1px solid silver;
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 24px;
+    padding: 4px;
+    display: flex;
+    flex-direction: row;
+}
+
+taskbar .start-button {
+    font-weight: 800;
+    width: 64px;
+    text-align: center;
+}
+
+taskbar button {
+    height: 24px;  
+    line-height: 0;
+    width: 200px;
+    text-align: left;
+}
+
+taskbar hr {
+    height: 100%;
+    margin: 4px;
+    margin-top: 0;
+}

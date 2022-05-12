@@ -1,11 +1,27 @@
+table {
+    display: block;
+    margin: 8px;
+    background: white;
+    border: 2px solid;
+    border-color: #666 #aaa #aaa #666;
+    max-height: 640px;
+    overflow-y: scroll;
+    border-collapse: collapse;
+}
+
+table th, table td {
+    font-weight: 400;
+    border-right: 1px solid silver;
+    border-bottom: 1px solid silver;
+    width: 100px;
+}
+
+table th {
+    width: 32px;
+}
+
 .inventory-box {
     display: inline-block;
-    background-color: silver;
-    border: 2px solid;
-    border-radius: 4px;
-    -moz-outline-radius: 4px;
-    border-color: white gray gray white;
-    outline: 2px solid black;
     margin: 2px;
     padding: 50px;
 }
@@ -32,10 +48,17 @@
 
 .tool-box {
     padding: 4px !important;
+    display: inline-flex;
 }
 
 .tool-box button {
     margin: 8px !important;
+    width: 100px;
+}
+
+.tool-box progress {
+    height: 32px;
+    margin: 8px;
 }
 
 .inventory-slot {
@@ -70,8 +93,9 @@
 body {
     margin: 0;
     padding: 0;
-    background-image: url('img/Overworld.jpg');
-    background-size: cover;
+    background: rgb(143, 166, 209);
+    font-family: Arial, Helvetica, sans-serif;
+    overflow: hidden;
 }
 
 .sidebar {
@@ -136,4 +160,13 @@ body {
 .healthbar {
     background-color: green;
     height: 2px;
+}
+
+#manual-crafting-list {
+    display: flex;
+    flex-direction: column;
+}
+
+#manual-crafting-list button {
+    width: 300px;    
 }

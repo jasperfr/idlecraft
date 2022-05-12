@@ -1,5 +1,23 @@
-GLOBAL_DRAGGED_ITEM = null;
 
+		<ul class="sidebar">
+			<h2>IdleCraft</h2>
+			<h2>Mining</h2>
+			<li><img src="img/grass.png"><h3>The Overworld</h3></li>
+			<li><img src="img/netherrack.png"><h3>The Nether</h3></li>
+			<li><img src="img/endstone.png"><h3>The End</h3></li>
+			<h2>Inventory management</h2>
+			<li><img src="img/crafting-table.png"><h3>Crafting</h3></li>
+			<li><img src="img/furnace.png"><h3>Smelting</h3></li>
+			<li><img src="img/chest.png"><h3>Storage</h3></li>
+			<h2>Food</h2>
+			<li><img src="img/wheat.png"><h3>Farming</h3></li>
+			<li><img src="img/hay-bale.png"><h3>Ranching</h3></li>
+			<h2>Combat</h2>
+			<li><img src="img/brewing-stand.png"><h3>Potion Brewing</h3></li>
+			<li><img src="img/bookcase.png"><h3>Enchanting</h3></li>
+			<li><img src="img/sword.png"><h3>Battle</h3></li>
+			<li><img src="img/mossy-stone-brick.png"><h3>Dungeons</h3></li>
+		</ul>
 class InventorySlot {
 	constructor(inventoryContainer) {
 		this.inventoryContainer = inventoryContainer;
@@ -151,40 +169,3 @@ class Item {
 		return $element;
 	}
 }
-
-const Game = (function() {
-
-	// variables
-	var inventory;
-
-	// functions
-	const start = function($list) {
-		inventory = new Inventory($list, 36);
-	};
-
-	const refresh = function() {
-		inventory.refresh();
-	};
-
-	const harvest = function(itemType) {
-		inventory.insert(itemType);
-		inventory.refresh();
-	}
-
-	const craft = function(item, count, required, maxStack = 64, health = -1) {
-		if(inventory.hasTheseItems(required)) {
-			inventory.insert(item, count, maxStack, health);
-			inventory.removeAll(required);
-		}
-		refresh();
-	}
-
-	// module declaration
-	return {
-		start: start,
-		harvest: harvest,
-		craft: craft,
-		refresh: refresh
-	};
-
-})();

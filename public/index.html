@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>FTB Idle</title>
+		<meta charset="UTF-8">
+		<link rel="stylesheet" type="text/css" href="stylesheet.css">
+		<link rel="stylesheet" type="text/css" href="window.css">
+		<script src="jquery.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>
+		<script src="app.js"></script>
+	</head>
+	<body onload="Game.start($('#inventory'));">
+
+        <window id="wnd-inventory">
+            <titlebar>
+                <span>Inventory</span>
+                <button onclick="minimize('wnd-inventory')">__</button>
+                <button onclick="close('wnd-inventory')">╳</button>
+            </titlebar>
+            <content>
+                <table class="inventory-table">
+                    <tr class="inventory-table-header">
+                        <th></th>
+                        <th>A</th>
+                        <th>B</th>
+                        <th>C</th>
+                    </tr>
+                    <tr class="inventory-table-header">
+                        <th>1</th>
+                        <td>Item</td>
+                        <td>Amount</td>
+                        <td>Production</td>
+                    </tr>
+                </table>
+            </content>
+        </window>
+
+        <window id="wnd-manual-gathering">
+            <titlebar>
+                <span>Manual Gathering</span>
+                <button onclick="minimize('wnd-manual-gathering')">__</button>
+                <button onclick="close('wnd-manual-gathering')">╳</button>
+            </titlebar>
+            <content>
+                <div id="harvest-stone" class="inventory-box tool-box">
+                    <button onclick="Game.harvest('stone');">Mine stone</button>
+                    <progress max="100" value="0" class="harvest-stone-progress"></progress>
+                </div>
+                <br/>
+                <div id="harvest-coal" class="inventory-box tool-box">
+                    <button onclick="Game.harvest('coal');">Mine coal</button>
+                    <progress max="100" value="0" class="harvest-coal-progress"></progress>
+                </div>
+                <br/>
+                <div id="harvest-copper" class="inventory-box tool-box">
+                    <button onclick="Game.harvest('copper');">Mine copper</button>
+                    <progress max="100" value="0" class="harvest-copper-progress"></progress>
+                </div>
+                <br/>
+                <div id="harvest-iron" class="inventory-box tool-box">
+                    <button onclick="Game.harvest('iron');">Mine iron</button>
+                    <progress max="100" value="0" class="harvest-iron-progress"></progress>
+                </div>
+            </content>
+        </window>
+
+        <window id="wnd-crafting-queue">
+            <titlebar>
+                <span>Crafting Queue</span>
+                <button onclick="minimize('wnd-crafting-queue')">__</button>
+                <button onclick="close('wnd-crafting-queue')">╳</button>
+            </titlebar>
+            <content>
+                <table class="crafting-queue-table">
+                    <tr class="crafting-queue-table-header">
+                        <th></th>
+                        <th>A</th>
+                        <th>B</th>
+                    </tr>
+                    <tr class="crafting-queue-table-header">
+                        <th>1</th>
+                        <td>Item</td>
+                        <td>Status</td>
+                    </tr>
+                </table>
+            </content>
+        </window>
+
+        <window id="wnd-manual-crafting">
+            <titlebar>
+                <span>Manual Crafting</span>
+                <button onclick="minimize('wnd-manual-crafting')">__</button>
+                <button onclick="close('wnd-manual-crafting')">╳</button>
+            </titlebar>
+            <content>
+                <div id="manual-crafting-list" class="inventory-box tool-box"></div>
+            </content>
+        </window>
+        
+        <window id="wnd-power">
+            <titlebar>
+                <span>Power</span>
+                <button onclick="minimize('wnd-power')">__</button>
+                <button onclick="close('wnd-power')">╳</button>
+            </titlebar>
+            <content>
+                <table>
+                    <tr><th>Production</th><td id="power-production"></td></tr>
+                    <tr><th>Consumption</th><td id="power-consumption"></td></tr>
+                    <tr><th>Gain</th><td id="power-gain"></td></tr>
+                </table>
+            </content>
+        </window>
+
+        <taskbar>
+            <button class="start-button">Start</button>
+            <hr/>
+            <button class="wnd-inventory" onclick="toggle('wnd-inventory')">Inventory</button>
+            <button class="wnd-manual-gathering" onclick="toggle('wnd-manual-gathering')">Manual Gathering</button>
+            <button class="wnd-crafting-queue" onclick="toggle('wnd-crafting-queue')">Crafting Queue</button>
+            <button class="wnd-manual-crafting" onclick="toggle('wnd-manual-crafting')">Manual Crafting</button>   
+            <button class="wnd-power" onclick="toggle('wnd-power')">Power</button>   
+            <hr/>         
+        </taskbar>
+	</body>
+</html>
