@@ -4,6 +4,10 @@ function camelToKebab(str) {
     return str.replace(/([a-z0-9]|(?=[A-Z]))([A-Z])/g, '$1-$2').toLowerCase().replace(/ /g, '-');
 }
 
+function firstLetterUppercase(str) {
+    return str.split(' ').map(word => word[0].toUpperCase() + word.slice(1)).join(' ');
+}
+
 function update() {
     if(player.crafting.queue.length > 0) {
         player.crafting.craftingProgress++;
@@ -14,11 +18,25 @@ function update() {
         }
     }
 
-    for(let [k, v] of Object.entries(player.progress)) {
-        if(v < 100) player.progress[k] = Math.min(player.progress[k] + player.mineSpeed, 100);
-        $(`.harvest-${k}-progress`).attr('value', player.progress[k]);
+    for(let [k, v] of Object.entries(player.mining.progress)) {
+        if(v < 100) player.mining.progress[k] = Math.min(player.mining.progress[k] + player.mining.speed, 100);
+        $(`.harvest-${k}-progress`).attr('value', player.mining.progress[k]);
     }
 
+    for(let [k, v] of Object.entries(player.inventory.items)) {
+        const $grid = $('.inventory-grid');
+        let className = camelToKebab(k);
+        let $gridItem = $grid.find(`.inventory-grid-${className}`);
+        if($gridItem.length) {
+            $gridItem.find('span').text(`${firstLetterUppercase(k)} (${v})`);
+        } else {
+            $grid.append($(`<griditem class="inventory-grid-${className}">
+                <img src="icons/items/${className}.png" alt="" onerror=this.src="icons/program.png">
+                <span>${firstLetterUppercase(k)} (${v})</span>
+            </griditem>`));
+        }
+    }
+    /*
     for(let [k, v] of Object.entries(player.inventory.items)) {
         const $table = $('.inventory-table');
         let className = camelToKebab(k);
@@ -28,12 +46,13 @@ function update() {
         } else {
             $table.append($(`<tr class="inventory-table-${className}">
                 <th>${$table.find('tr').length}</th>
-                <td class="inventory-table-name">${k}</td>
+                <td class="inventory-table-name">${firstLetterUppercase(k)} (${v})</td>
                 <td class="inventory-table-amount">${v}</td>
                 <td class="inventory-table-production">0 / sec</td>
             </tr>`))           
         }
     }
+    */
 
     $('.crafting-queue-table').find('tr').not('tr.crafting-queue-table-header').remove();
     for(let i = 0; i < player.crafting.queue.length; i++) {
@@ -99,13 +118,23 @@ const player = {
             this.items[item] = amount;
         }
     },
-    mineSpeed: 1,
-    progress: {
-        stone: 100,
-        coal: 100,
-        iron: 100,
-        copper: 100
+
+    mining: {
+        speed: 1,
+        progress: {
+            stone: 100,
+            coal: 100,
+            iron: 100,
+            copper: 100
+        },
+        harvest: function(itemType) {
+            if(player.mining.progress[itemType] === 100) {
+                player.inventory.add(itemType, 1);
+                player.mining.progress[itemType] = 0;
+            }
+        }
     },
+
     crafting: {
         craftingProgress: 0,
         queue: [],
@@ -134,59 +163,66 @@ const player = {
     }
 }
 
-const Game = (function() {
+const Game =  {
 
-	// variables
-	var inventory;
+    save() {
+        const inventoryData = { ...player.inventory.items };
+        const formattedData = btoa(JSON.stringify(inventoryData));
+        localStorage.factorySaveGame = formattedData;
+    },
+    
+    load() {
+        if(!localStorage.factorySaveGame) return;
+        const parsedData = JSON.parse(atob(localStorage.factorySaveGame));
+        player.inventory.items = { ...parsedData };        
+    },
 
-	// functions
-	const start = function($list) {
-        $('window').draggable({ 'handle': 'titlebar' });
+	start() {
+        // Try to load the data
+        Game.load();
 
+        // Component registration
+        $('window').draggable({ 'handle': 'titlebar', 'stack': 'window' }).hide();
+        $('.taskbar-button').hide();
+        $('window').mousedown(function() {
+            WindowManager.setLastOpenWindow(this.id);
+        })
         for(let recipe of Object.keys(recipes)) {
             $('#manual-crafting-list').append(
                 $(`<button onclick="player.crafting.craft('${recipe}');">Craft ${recipe}</button>`)
             );
         }
-	};
 
-	const refresh = function() {
-		inventory.refresh();
-	};
-
-	const harvest = function(itemType) {
-        if(player.progress[itemType] === 100) {
-            player.inventory.add(itemType, 1);
-            player.progress[itemType] = 0;
-        }
+        setInterval(Game.save, 10000);
 	}
-
-	const craft = function(item, count, required, maxStack = 64, health = -1) {
-		if(inventory.hasTheseItems(required)) {
-			inventory.insert(item, count, maxStack, health);
-			inventory.removeAll(required);
-		}
-		refresh();
-	}
-
-	// module declaration
-	return {
-		start: start,
-		harvest: harvest,
-		craft: craft,
-		refresh: refresh
-	};
-
-})();
-
-function minimize(hwnd) {
-    $('#' + hwnd).hide();
 }
 
-function toggle(hwnd) {
-    $('#' + hwnd).toggle();
-}
+const WindowManager = {
+    lastOpenWindow: null,
 
-function close(hwnd) {
+    setLastOpenWindow(window) {
+        this.lastOpenWindow = window;
+        $('window').removeClass('focus');
+        $('window#' + this.lastOpenWindow).addClass('focus');        
+    },
 
-}
+    open(window) {
+        $('window#' + window).show();
+        $('window#' + window).css('top', '20px').css('left', '20px');
+        $('taskbar button.' + window).show();
+        this.setLastOpenWindow(window);
+    },
+
+    minimize(window) {
+        $('window#' + window).hide();
+    },
+
+    toggle(window) {
+        $('window#' + window).toggle();        
+    },
+
+    close(window) {
+        $('window#' + window).hide();
+        $('taskbar button.' + window).hide();
+    }
+};

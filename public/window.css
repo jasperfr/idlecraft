@@ -8,15 +8,19 @@ window {
     outline: 2px solid black;
 }
 
+
 titlebar {
     padding: 2px;
     padding-left: 4pt;
-    background: linear-gradient(to right, rgb(40, 40, 102), rgb(96, 163, 221));
+    background: linear-gradient(to right, rgb(80, 80, 80), rgb(180, 180, 180));
     color: white;
     user-select: none;
     cursor: pointer;
     display: flex;
     justify-content: space-between;
+}
+window.focus titlebar {
+    background: linear-gradient(to right, rgb(40, 40, 102), rgb(96, 163, 221));
 }
 titlebar span {
     flex: 1 0 auto;
@@ -79,4 +83,79 @@ taskbar hr {
     height: 100%;
     margin: 4px;
     margin-top: 0;
+}
+
+icon {
+    display: block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+    color: white;
+    user-select: none;
+    cursor: pointer;
+}
+
+icon img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 48px;
+    height: 48px;
+    margin: 16px;
+    image-rendering: pixelated;
+    transform: translateY(-8px);
+}
+
+icon span {
+    position: absolute;
+    left: 0;
+    bottom: 2pt;
+    right: 0;
+    font-size: 8pt;
+    text-align: center;
+}
+
+icon:hover {
+    background-color: rgba(0, 0, 128, 0.5);
+}
+
+grid {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 320px;
+    background: white;
+    border: 2px solid;
+    border-color: #666 #aaa #aaa #666;
+    margin: 2px;
+    padding: 8px;
+}
+
+griditem {
+    display: block;
+    position: relative;
+    width: 80px;
+    height: 80px;
+    color: black;
+    user-select: none;
+    cursor: default;
+}
+
+griditem img {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 48px;
+    height: 48px;
+    margin: 16px;
+    image-rendering: pixelated;
+    transform: translateY(-8px);
+}
+
+griditem span {
+    position: absolute;
+    left: 0;
+    bottom: 2pt;
+    right: 0;
+    font-size: 8pt;
+    text-align: center;
 }

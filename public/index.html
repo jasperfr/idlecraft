@@ -11,14 +11,42 @@
 	</head>
 	<body onload="Game.start($('#inventory'));">
 
+        <icon ondblclick="WindowManager.open('wnd-inventory')">
+            <img src="icons/program-icons.png" alt=""/>
+            <span>Inventory</span>            
+        </icon>
+
+        <icon ondblclick="WindowManager.open('wnd-manual-gathering')">
+            <img src="icons/pickaxe.png" alt=""/>
+            <span>Manual Mining</span>            
+        </icon>
+
+        <icon ondblclick="WindowManager.open('wnd-manual-crafting')">
+            <img src="icons/gears.png" alt=""/>
+            <span>Manual Crafting</span>            
+        </icon>
+
+        <icon ondblclick="WindowManager.open('wnd-power')">
+            <img src="icons/power.png" alt=""/>
+            <span>Power</span>            
+        </icon>
+        
+        <icon ondblclick="WindowManager.open('wnd-automatic-gathering')">
+            <img src="icons/recipelist.png" alt=""/>
+            <span>Autocrafting</span>            
+        </icon>
+
         <window id="wnd-inventory">
             <titlebar>
                 <span>Inventory</span>
-                <button onclick="minimize('wnd-inventory')">__</button>
-                <button onclick="close('wnd-inventory')">╳</button>
+                <button onclick="WindowManager.minimize('wnd-inventory')">__</button>
+                <button onclick="WindowManager.close('wnd-inventory')">╳</button>
             </titlebar>
             <content>
-                <table class="inventory-table">
+                <grid class="inventory-grid">
+                    
+                </grid>
+                <!-- <table class="inventory-table">
                     <tr class="inventory-table-header">
                         <th></th>
                         <th>A</th>
@@ -31,46 +59,46 @@
                         <td>Amount</td>
                         <td>Production</td>
                     </tr>
-                </table>
+                </table> -->
             </content>
         </window>
 
         <window id="wnd-manual-gathering">
             <titlebar>
                 <span>Manual Gathering</span>
-                <button onclick="minimize('wnd-manual-gathering')">__</button>
-                <button onclick="close('wnd-manual-gathering')">╳</button>
+                <button onclick="WindowManager.minimize('wnd-manual-gathering')">__</button>
+                <button onclick="WindowManager.close('wnd-manual-gathering')">╳</button>
             </titlebar>
             <content>
                 <div id="harvest-stone" class="inventory-box tool-box">
-                    <button onclick="Game.harvest('stone');">Mine stone</button>
+                    <button onclick="player.mining.harvest('stone');">Mine stone</button>
                     <progress max="100" value="0" class="harvest-stone-progress"></progress>
                 </div>
                 <br/>
                 <div id="harvest-coal" class="inventory-box tool-box">
-                    <button onclick="Game.harvest('coal');">Mine coal</button>
+                    <button onclick="player.mining.harvest('coal');">Mine coal</button>
                     <progress max="100" value="0" class="harvest-coal-progress"></progress>
                 </div>
                 <br/>
                 <div id="harvest-copper" class="inventory-box tool-box">
-                    <button onclick="Game.harvest('copper');">Mine copper</button>
+                    <button onclick="player.mining.harvest('copper');">Mine copper</button>
                     <progress max="100" value="0" class="harvest-copper-progress"></progress>
                 </div>
                 <br/>
                 <div id="harvest-iron" class="inventory-box tool-box">
-                    <button onclick="Game.harvest('iron');">Mine iron</button>
+                    <button onclick="player.mining.harvest('iron');">Mine iron</button>
                     <progress max="100" value="0" class="harvest-iron-progress"></progress>
                 </div>
             </content>
         </window>
 
-        <window id="wnd-crafting-queue">
+        <window id="wnd-manual-crafting">
             <titlebar>
-                <span>Crafting Queue</span>
-                <button onclick="minimize('wnd-crafting-queue')">__</button>
-                <button onclick="close('wnd-crafting-queue')">╳</button>
+                <span>Manual Crafting</span>
+                <button onclick="WindowManager.minimize('wnd-manual-crafting')">__</button>
+                <button onclick="WindowManager.close('wnd-manual-crafting')">╳</button>
             </titlebar>
-            <content>
+            <content style="display: flex; flex-direction: row;">
                 <table class="crafting-queue-table">
                     <tr class="crafting-queue-table-header">
                         <th></th>
@@ -83,16 +111,6 @@
                         <td>Status</td>
                     </tr>
                 </table>
-            </content>
-        </window>
-
-        <window id="wnd-manual-crafting">
-            <titlebar>
-                <span>Manual Crafting</span>
-                <button onclick="minimize('wnd-manual-crafting')">__</button>
-                <button onclick="close('wnd-manual-crafting')">╳</button>
-            </titlebar>
-            <content>
                 <div id="manual-crafting-list" class="inventory-box tool-box"></div>
             </content>
         </window>
@@ -100,8 +118,8 @@
         <window id="wnd-power">
             <titlebar>
                 <span>Power</span>
-                <button onclick="minimize('wnd-power')">__</button>
-                <button onclick="close('wnd-power')">╳</button>
+                <button onclick="WindowManager.minimize('wnd-power')">__</button>
+                <button onclick="WindowManager.close('wnd-power')">╳</button>
             </titlebar>
             <content>
                 <table>
@@ -112,14 +130,33 @@
             </content>
         </window>
 
+        <window id="wnd-automatic-gathering">
+            <titlebar>
+                <span>Automatic Gathering</span>
+                <button onclick="WindowManager.minimize('wnd-automatic-gathering')">__</button>
+                <button onclick="WindowManager.close('wnd-automatic-gathering')">╳</button>
+            </titlebar>
+            <content>
+                <h2 class="title-free-mine-count"><span class="label-free-mines-count">0</span> Mine(s) available</h2>
+                <h3 class="title-auto-mine-consumption">Consumption: <span class="label-auto-mines-consumption">0</span> kW</h3>
+                <div class="inventory-box tool-box">
+                    <button onclick="player.mines.add('stone', 1);">-</button>
+                    <p><span class="label-iron-mines-count">0</span> Iron Mine(s)</p>
+                    <button onclick="player.mines.add('stone', -1);">+</button>
+                </div>
+                <br/>
+                <progress max="100" value="50" class="auto-harvest-progress"></progress>
+            </content>
+        </window>
+
         <taskbar>
             <button class="start-button">Start</button>
             <hr/>
-            <button class="wnd-inventory" onclick="toggle('wnd-inventory')">Inventory</button>
-            <button class="wnd-manual-gathering" onclick="toggle('wnd-manual-gathering')">Manual Gathering</button>
-            <button class="wnd-crafting-queue" onclick="toggle('wnd-crafting-queue')">Crafting Queue</button>
-            <button class="wnd-manual-crafting" onclick="toggle('wnd-manual-crafting')">Manual Crafting</button>   
-            <button class="wnd-power" onclick="toggle('wnd-power')">Power</button>   
+            <button class="taskbar-button wnd-inventory" onclick="WindowManager.toggle('wnd-inventory')">Inventory</button>
+            <button class="taskbar-button wnd-manual-gathering" onclick="WindowManager.toggle('wnd-manual-gathering')">Manual Gathering</button>
+            <button class="taskbar-button wnd-manual-crafting" onclick="WindowManager.toggle('wnd-manual-crafting')">Manual Crafting</button>   
+            <button class="taskbar-button wnd-power" onclick="WindowManager.toggle('wnd-power')">Power</button>     
+            <button class="taskbar-button wnd-automatic-gathering" onclick="WindowManager.toggle('wnd-automatic-gathering')">Automaic Gathering</button>   
             <hr/>         
         </taskbar>
 	</body>

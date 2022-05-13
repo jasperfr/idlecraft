@@ -170,3 +170,33 @@ body {
 #manual-crafting-list button {
     width: 300px;    
 }
+
+.title-free-mine-count, .title-auto-mine-consumption {
+    margin: 8pt;
+    text-align: center;
+}
+
+.auto-harvest-progress {
+    margin: 10px;
+    width: calc(100% + -20px);
+}
+
+progress {
+    height: 24px;
+    background: #fff;
+    border: 2px solid;
+    border-color: #888 white white #888;
+}
+
+progress::-webkit-progress-bar {
+  /* style rules */
+    background: #fff;
+}
+progress::-webkit-progress-value {
+  /* style rules */
+    background: #008;
+}
+progress::-moz-progress-bar {
+  /* style rules */
+    background: #fff;
+}
