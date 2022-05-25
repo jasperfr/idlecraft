@@ -1,4 +1,35 @@
+/*
+class DesktopWindow {
+    constructor(id) {
+        this.id = id;
+        this.$window = $(`<window id="${this.id}">
+            <titlebar><span></span></titlebar>
+            <content></content>
+        </window>`);
 
+        this.$window.draggable({ 'handle': 'titlebar', 'stack': 'window' });
+
+        $(document.body).append(this.$window);
+    }
+
+    setTitle(title) {
+        this.$window.find('titlebar span').text(title);
+        return this;
+    }
+
+    addCloseButton(disabled = false) {
+        if(this.$window.find('titlebar button.close').length) return this;
+        const $button = $(`<button class="close${disabled ? ' disabled' : ''}">╳</button>`);
+        if(!disabled) $button.click(() => WindowManager.close(this.id));
+        this.$window.find('titlebar').append($button);
+        return this;        
+    }
+
+    close() {
+        this.$window.remove();
+    }
+}
+*/
 		<ul class="sidebar">
 			<h2>IdleCraft</h2>
 			<h2>Mining</h2>

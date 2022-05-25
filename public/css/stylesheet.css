@@ -93,7 +93,8 @@ table th {
 body {
     margin: 0;
     padding: 0;
-    background: rgb(143, 166, 209);
+    background: rgb(121, 143, 184);
+    /* background: #088; */
     font-family: Arial, Helvetica, sans-serif;
     overflow: hidden;
 }
@@ -154,7 +155,7 @@ body {
     width: 34px;
     height: 4px;
     background-color: black;
-    transform: translateY(-4px);
+    transform: translateY(-8px);
 }
 
 .healthbar {
@@ -199,4 +200,95 @@ progress::-webkit-progress-value {
 progress::-moz-progress-bar {
   /* style rules */
     background: #fff;
+}
+
+#wnd-manual-smelting-progress content {
+    padding: 8pt;
+}
+
+.manual-smelting-display {
+    display: flex;
+}
+
+#wnd-manual-smelting-progress h2 {
+    margin: 2pt;
+    text-align: center;
+}
+
+.manual-smelting-display img {
+    image-rendering: pixelated;    
+}
+
+.manual-smelting-display progress {
+    width: 120px;
+    height: 24px;
+    margin: 4px;
+}
+
+#wnd-manual-smelting-progress content button {
+    display: block;
+    margin: auto;
+    margin-top: 10px;
+    width: 100px;
+    text-align: center;
+}
+
+.mine-box {
+    display: flex;
+    flex: 1 0 auto;
+    justify-content: left;
+    user-select: none;
+}
+
+.miner-box button {
+    width: 60pt;
+}
+
+.mine-box img {
+    image-rendering: pixelated;
+    width: 48px;
+    height: 48px;
+}
+
+.mine-box span {
+    display: block;
+    flex: 1 0 auto;
+    margin: auto;
+}
+#wnd-power td {
+    width: 100%;
+    text-align: right;
+}
+canvas#power-graph {
+    margin: 8px;
+    background: #000;
+    border: 2px solid;
+    border-color: #888 white white #888;
+}
+
+.miners-grid span, .smelters-grid span {
+    color: black;
+}
+
+#manual-crafting-list button {
+    display: flex;
+    image-rendering: pixelated;
+    width: 160px;
+    height: 48px;
+    padding: 6px;
+    box-sizing: border-box;
+}
+
+#manual-crafting-list button div {
+    position: relative;
+}
+
+#manual-crafting-list button div.spacer {
+    flex: 1 0 auto;
+}
+
+#manual-crafting-list button div span {
+    position: absolute;
+    right: 0;
+    bottom: 0;
 }

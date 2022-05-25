@@ -1,13 +1,15 @@
 window {
-    position: absolute;
+    position: absolute !important;
+    left: 0;
+    top: 0;
     display: inline-flex;
     flex-direction: column;
     background-color: silver;
     border: 2px solid;
     border-color: white gray gray white;
     outline: 2px solid black;
+    min-width: 120px;
 }
-
 
 titlebar {
     padding: 2px;
@@ -24,6 +26,8 @@ window.focus titlebar {
 }
 titlebar span {
     flex: 1 0 auto;
+    font-size: 10pt;
+    margin: auto;
 }
 
 titlebar button {
@@ -66,6 +70,25 @@ taskbar {
     flex-direction: row;
 }
 
+taskbar div.taskbar-buttons {
+    flex: 1 0 auto;
+    display: flex;
+}
+
+taskbar .taskbar-icons {
+    display: block;
+    border: 1px solid;
+    border-color: #888 white white #888;
+    padding: 0 3pt 0 2pt;
+}
+
+taskbar span.taskbar-clock {
+    display: block;
+    margin: 0;
+    height: 100%;
+    line-height: 22px;
+}
+
 taskbar .start-button {
     font-weight: 800;
     width: 64px;
@@ -75,7 +98,11 @@ taskbar .start-button {
 taskbar button {
     height: 24px;  
     line-height: 0;
-    width: 200px;
+}
+
+taskbar div.taskbar-buttons button {
+    flex: 1 1 0;
+    max-width: 200px;
     text-align: left;
 }
 
@@ -88,19 +115,23 @@ taskbar hr {
 icon {
     display: block;
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 64px;
+    height: 64px;
     color: white;
     user-select: none;
     cursor: pointer;
+}
+
+.computer-grid griditem span {
+    color: black;
 }
 
 icon img {
     position: absolute;
     left: 0;
     top: 0;
-    width: 48px;
-    height: 48px;
+    width: 32px;
+    height: 32px;
     margin: 16px;
     image-rendering: pixelated;
     transform: translateY(-8px);
@@ -109,7 +140,7 @@ icon img {
 icon span {
     position: absolute;
     left: 0;
-    bottom: 2pt;
+    bottom: 4pt;
     right: 0;
     font-size: 8pt;
     text-align: center;
@@ -117,6 +148,17 @@ icon span {
 
 icon:hover {
     background-color: rgba(0, 0, 128, 0.5);
+}
+
+icon.shortcut::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0; right: 0; top: 0; bottom: 0;
+    background-image: url('../icons/shortcut.png');
+    image-rendering: pixelated;
+    background-repeat: no-repeat;
+    margin: 12px;
 }
 
 grid {
@@ -127,14 +169,15 @@ grid {
     border: 2px solid;
     border-color: #666 #aaa #aaa #666;
     margin: 2px;
-    padding: 8px;
+    min-width: 128px;
+    min-height: 64px;
 }
 
 griditem {
     display: block;
     position: relative;
-    width: 80px;
-    height: 80px;
+    width: 64px;
+    height: 64px;
     color: black;
     user-select: none;
     cursor: default;
@@ -144,8 +187,8 @@ griditem img {
     position: absolute;
     left: 0;
     top: 0;
-    width: 48px;
-    height: 48px;
+    width: 32px;
+    height: 32px;
     margin: 16px;
     image-rendering: pixelated;
     transform: translateY(-8px);
@@ -158,4 +201,71 @@ griditem span {
     right: 0;
     font-size: 8pt;
     text-align: center;
+}
+
+progress {
+    position: relative;
+}
+
+progress.choppy::after {
+    content: "";
+    display: block;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    background-image: repeating-linear-gradient(to right, transparent, transparent 9%, white 10%)
+}
+
+ul#contextmenu {
+    display: none;
+}
+
+ul#contextmenu, ul#contextmenu ul {
+    padding: 0;
+    list-style-type: none;
+    position: absolute;
+    z-index: 255;
+    background: silver;
+    border: 2px solid;
+    border-color: white #888 #888 white;
+    outline: 1px solid black;
+    font-size: 10pt;
+    min-width: 120px;
+}
+
+ul#contextmenu hr {
+    margin: 0;
+}
+
+ul#contextmenu li {
+    cursor: pointer;
+    padding: 4pt;
+    display: flex;
+    flex-direction: row;
+}
+
+ul#contextmenu li:hover {
+    background-color: #008;
+    color: white;
+}
+
+ul#contextmenu img {
+    width: 16px;
+    height: 16px;
+    image-rendering: pixelated;
+    margin-right: 4pt;
+}
+
+content h6 {
+    margin: 0;
+    text-align: center;
+}
+
+img.icon {
+    width: 16px;
+    height: 16px;
+    margin: auto;
+    margin-right: 2pt;
 }
